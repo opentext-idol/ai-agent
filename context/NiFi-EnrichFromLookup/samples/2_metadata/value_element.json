@@ -1,0 +1,18 @@
+/*{
+    "name": "value_element (text + children)",
+    "info": "For an element that carries text and must also gain enriched children (e.g. an Eduction <POSTAL_CODE>), value_element migrates the text into a named child first. See the overview for a before/after."
+}*/
+{
+    "metadata": [
+        {
+            "id": "eduction_postcode_metadata",
+            "path": "POSTAL_CODE",
+            "value_element": "postcode",
+            "fields": [
+                { "name": "postcode", "path": "." },
+                "latitude",
+                "longitude"
+            ]
+        }
+    ]
+}

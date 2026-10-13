@@ -1,0 +1,63 @@
+<!--{
+    "name": "About metadata",
+    "info": "The XML-tree model: path, field forms, relative resolution, and value_element"
+}-->
+<div>
+    <p>
+        A <code>metadata</code> block maps logical field names to locations in the document's
+        XML metadata. The same definition is used for both directions: reading input values
+        before the lookup, and writing output values back after it.
+    </p>
+    <h4>path - the iteration scope</h4>
+    <p>
+        <code>path</code> is an XPath (relative to <code>&lt;xmlmetadata&gt;</code>) to the
+        element the lookup operates on. Use <code>"."</code> for the document root.
+        When <code>path</code> matches several elements (e.g. repeating
+        <code>&lt;location&gt;</code> blocks) each match is enriched independently, using its
+        own field values.
+    </p>
+    <h4>fields</h4>
+    <p>
+        Each entry of <code>fields</code> takes one of three forms:
+    </p>
+    <ul>
+        <li><b>Bare string</b> - <code>"latitude"</code> is shorthand for
+            <code>{ "name": "latitude", "path": "latitude" }</code>; used when the logical name
+            equals the element name.</li>
+        <li><b>Named leaf</b> - <code>{ "name": "postcode", "path": "zip" }</code> reads/writes
+            the <code>&lt;zip&gt;</code> element but exposes it to the lookup as
+            <code>postcode</code>.</li>
+        <li><b>Container</b> - <code>{ "path": "address", "fields": [ ... ] }</code> has no
+            name; it descends a level so nested fields resolve relative to it.</li>
+    </ul>
+    <p>
+        Field paths are relative to the matched <code>path</code> element. A path may be a
+        simple element name, a relative XPath (<code>address/zip</code>), an attribute
+        (<code>@country</code>), self (<code>.</code>) or parent (<code>..</code>), or a
+        property object <code>{ "property": "X", "default": "..." }</code> that reads the path
+        from a NiFi dynamic property at runtime. Output elements are created if they do not
+        already exist.
+    </p>
+    <h4>value_element</h4>
+    <p>
+        Set <code>value_element</code> on a container (or the root) when the element will both
+        carry a primary value as text and gain enriched child elements - which would otherwise
+        be invalid mixed content. Before writing outputs, any existing text is migrated into a
+        named child; a field with <code>"path": "."</code> then reads/writes that child. For
+        example, an Eduction tag:
+    </p>
+    <pre>
+Before:  &lt;POSTAL_CODE&gt;94143&lt;/POSTAL_CODE&gt;
+
+After:   &lt;POSTAL_CODE&gt;
+           &lt;postcode&gt;94143&lt;/postcode&gt;
+           &lt;latitude&gt;37.7749&lt;/latitude&gt;
+           &lt;longitude&gt;-122.4194&lt;/longitude&gt;
+         &lt;/POSTAL_CODE&gt;
+    </pre>
+    <p>
+        is produced by a metadata root with <code>"path": "POSTAL_CODE"</code>,
+        <code>"value_element": "postcode"</code>, and a field
+        <code>{ "name": "postcode", "path": "." }</code>.
+    </p>
+</div>

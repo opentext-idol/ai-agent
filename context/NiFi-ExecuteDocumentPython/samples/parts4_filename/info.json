@@ -1,0 +1,4 @@
+{
+    "name": "Parts of FlowFileDocument: Accessing filenames",
+    "info": "Reading and writing parts of a FlowFileDocument referencing files on the filesystem"
+}

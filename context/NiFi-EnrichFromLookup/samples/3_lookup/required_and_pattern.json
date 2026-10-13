@@ -1,0 +1,22 @@
+/*{
+    "name": "Required input with pattern",
+    "info": "required + pattern validate the query key before the lookup runs; an empty or non-matching value routes the document to failure instead of querying."
+}*/
+{
+    "lookup": [
+        {
+            "id": "validated_zip_lookup",
+            "metadata_id": "postcode_metadata",
+            "data_id": "zip_data",
+            "inputs": [
+                {
+                    "name": "postcode",
+                    "expr": "${postcode:replaceAll('-.*', '')}",
+                    "required": true,
+                    "pattern": "[0-9]{5}"
+                }
+            ],
+            "outputs": ["place", "latitude", "longitude"]
+        }
+    ]
+}

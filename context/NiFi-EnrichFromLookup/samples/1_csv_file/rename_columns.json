@@ -1,0 +1,19 @@
+/*{
+    "name": "Rename columns",
+    "info": "names maps raw columns to the logical names lookups use. A bare string keeps the name; an object renames it. Unlisted columns are not loaded."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "zip_data",
+            "file_key": "zip_csv",
+            "headers": ["zip", "town", "county", "lat", "lon"],
+            "names": [
+                { "name": "postcode", "expr": "${zip}" },
+                { "name": "place", "expr": "${town}" },
+                "lat",
+                "lon"
+            ]
+        }
+    ]
+}

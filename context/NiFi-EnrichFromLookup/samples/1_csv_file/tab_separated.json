@@ -1,0 +1,15 @@
+/*{
+    "name": "Tab-separated file",
+    "info": "Set separator to \\t for tab-delimited data (any single character, or a %XX / \\xXX hex escape, also works)."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "geonames_data",
+            "file_key": "geonames_tsv",
+            "use_header_row": false,
+            "separator": "\t",
+            "headers": ["country", "postcode", "place", "region", "latitude", "longitude"]
+        }
+    ]
+}

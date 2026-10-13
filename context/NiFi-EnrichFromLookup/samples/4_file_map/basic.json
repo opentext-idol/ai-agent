@@ -1,0 +1,9 @@
+/*{
+    "name": "Basic file_map",
+    "info": "A key (used as a csv_file's file_key) mapped to a data filename relative to the configuration directory."
+}*/
+{
+    "file_map": {
+        "zip_csv": "us_zip_sample.csv"
+    }
+}

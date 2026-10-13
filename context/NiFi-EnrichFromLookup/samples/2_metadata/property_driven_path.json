@@ -1,0 +1,18 @@
+/*{
+    "name": "Path from a NiFi property",
+    "info": "A {property, default} path is read from a dynamic processor property at runtime, so one config fits documents whose postcode element varies by source."
+}*/
+{
+    "metadata": [
+        {
+            "id": "postcode_metadata",
+            "path": ".",
+            "fields": [
+                { "name": "postcode", "path": { "property": "postcode_field", "default": "zip" } },
+                "place",
+                "latitude",
+                "longitude"
+            ]
+        }
+    ]
+}

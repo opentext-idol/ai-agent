@@ -1,0 +1,4 @@
+{
+    "name": "CSV file",
+    "info": "CSV data sources: where the file lives, how its columns are named, and which columns to index for fast lookups."
+}

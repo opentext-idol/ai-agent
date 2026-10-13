@@ -1,0 +1,49 @@
+<!--{
+    "name": "About csv_file",
+    "info": "How a CSV data source is described: file location, column names, and indexes"
+}-->
+<div>
+    <p>
+        A <code>csv_file</code> describes a delimited data file that lookups can query.
+        It does not contain the data - it points at a file (via <code>file_key</code>)
+        and declares how to read it.
+    </p>
+    <h4>Locating the file</h4>
+    <p>
+        <code>file_key</code> is a key into a <code>file_map</code> block, which resolves to
+        the actual file path. This indirection lets the file move without touching the
+        data source or the lookups that use it.
+    </p>
+    <h4>Naming the columns</h4>
+    <p>
+        Lookups filter and read by <b>logical column names</b>. Those names come from one of:
+    </p>
+    <ul>
+        <li><code>use_header_row: true</code> (the default) - the first row of the file is the
+            header and supplies the column names.</li>
+        <li><code>headers: [ ... ]</code> - an explicit list of names, used when the file has
+            no header row (<code>use_header_row: false</code>).</li>
+        <li><code>names: [ ... ]</code> - remaps or computes the logical names exposed to
+            lookups. A bare string keeps a column as-is; an object
+            <code>{ "name": ..., "expr": ... }</code> exposes a computed value under a new
+            name. <b>Only columns listed in <code>names</code> are loaded</b> when it is
+            present, so it also acts as a column filter.</li>
+    </ul>
+    <p>
+        The <code>separator</code> defaults to <code>,</code>; use <code>"\t"</code> for tab,
+        or a hex escape (<code>%XX</code> / <code>\xXX</code>) for other delimiters.
+    </p>
+    <h4>Indexes</h4>
+    <p>
+        <code>indexes</code> lists sets of columns to index. A lookup whose <code>inputs</code>
+        exactly cover an index resolves with a single index probe; without a matching index it
+        scans the whole file. Create a single-column index for single-key lookups and a
+        compound index for multi-key lookups.
+    </p>
+    <h4>Column typing</h4>
+    <p>
+        A logical column name beginning <code>I_</code> or <code>S_</code> is stored as integer
+        or string respectively (the prefix is stripped from the stored name). A column named
+        <code>"-"</code> is ignored.
+    </p>
+</div>

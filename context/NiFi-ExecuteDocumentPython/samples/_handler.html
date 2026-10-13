@@ -1,0 +1,76 @@
+<!--{
+    "name": "Handler function arguments",
+    "info": "Information about the main script entry point function arguments"
+}-->
+<div>
+    <p>
+        The processor is configured with a "Python script function" property.
+        This defines the name of the function that will be called from the main script.
+    </p>
+    <p>
+        The default defines the function name as "handler".
+        The main script (defined by the property "Python script file") should include a definition
+        for the handler function.
+        
+        <code>
+        def handler()
+        </code>
+    </p>
+    <p>
+        The function may be declared as having any of the following argument names, which will
+        be assigned the appropriate object based on the names.
+    </p>
+    <table style="border-collapse:collapse;border:1px solid #cccccc">
+        <tr style="border-bottom:1px solid #888888;font-weight:bold">
+            <th>Argument name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Type of object assigned</th>
+        </tr>
+        <tr>
+            <td>p</td>
+            <td rowspan="2" style="vertical-align:middle"><a href="html/idolnifi.html#idolnifi.Processor">idolnifi.Processor</a></td>
+        </tr>
+        <tr style="border-bottom:1px solid #cccccc">
+            <td>processor</td>
+        </tr>
+        <tr>
+            <td>c</td>
+            <td rowspan="2" style="vertical-align:middle"><a href="html/idolnifi.html#idolnifi.ProcessContext">idolnifi.ProcessContext</a></td>
+        </tr>
+        <tr style="border-bottom:1px solid #cccccc">
+            <td>context</td>
+        </tr>
+        <tr>
+            <td>s</td>
+            <td rowspan="2" style="vertical-align:middle"><a href="html/idolnifi.html#idolnifi.ProcessSession">idolnifi.ProcessSession</a></td>
+        </tr>
+        <tr style="border-bottom:1px solid #cccccc">
+            <td>session</td>
+        </tr>
+        <tr>
+            <td>ff</td>
+            <td rowspan="2" style="vertical-align:middle"><a href="html/idolnifi.html#idolnifi.FlowFile">idolnifi.FlowFile</a> (*)</td>
+        </tr>
+        <tr style="border-bottom:1px solid #cccccc">
+            <td>flowfile</td>
+        </tr>
+        <tr>
+            <td>doc</td>
+            <td rowspan="4" style="vertical-align:middle"><a href="html/idolnifi.html#idolnifi.FlowFileDocument">idolnifi.FlowFileDocument</a> (*)</td>
+        </tr>
+        <tr>
+            <td>ffdoc</td>
+        </tr>
+        <tr>
+            <td>document</td>
+        </tr>
+        <tr>
+            <td>flowfiledocument</td>
+        </tr>
+    </table>
+    <p style="font-style:italic">
+        * If the processor does not have an input connection, the handler cannot accept a FlowFile
+        or FlowFileDocument as an argument.  FlowFiles and FlowFileDocuments can still be created
+        by the processor as output.  When an input connection is present, only one of FlowFile or
+        FlowFileDocument is allowed as an argument to the function.
+    </p>
+</div>

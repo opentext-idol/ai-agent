@@ -1,0 +1,31 @@
+<!--{
+    "name": "Content text parts"
+}-->
+<div>
+    <p>
+        Content text parts of a FlowFileDocument are segments of the content of a FlowFile containing UTF-8 character data.
+        The content text of a single part may be split into pages.
+        The 'Form Feed' or 'New Page' control character 12 is used to separate pages within a single part.
+    </p>
+    <p>
+        The following methods can be used to read and write content text parts:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>for page in <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getContentPages">FlowFileDocument.getContentPages</a>()</li>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.setContentPages">FlowFileDocument.setContentPages</a>(pages)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.deleteContentPages">FlowFileDocument.deleteContentPages</a>()</li>
+		<br/>
+		<li>partPages = <a href="html/idolnifi.html#idolnifi.ContentAction.getContent">ContentAction.getContent</a>()</li>
+		<li><a href="html/idolnifi.html#idolnifi.ContentAction.setContent">ContentAction.setContent</a>(partPages)</li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.ContentAction.readContent">ContentAction.readContent</a>(...)</li>
+		<li><a href="html/idolnifi.html#idolnifi.ContentAction.transformContent">ContentAction.transformContent</a>(...)</li>
+		<li><a href="html/idolnifi.html#idolnifi.ContentAction.writeContent">ContentAction.writeContent</a>(...)</li>
+		<li>with <a href="html/idolnifi.html#idolnifi.ContentAction.readContent">ContentAction.readContent</a>() as <a href="html/idolnifi.html#idolnifi.TextInputStream">inputstream</a></li>
+		<li>with <a href="html/idolnifi.html#idolnifi.ContentAction.transformContent">ContentAction.transformContent</a>() as (<a href="html/idolnifi.html#idolnifi.TextInputStream">inputstream</a>,<a href="html/idolnifi.html#idolnifi.TextOutputStream">outputstream</a>)</li>
+		<li>with <a href="html/idolnifi.html#idolnifi.ContentAction.writeContent">ContentAction.writeContent</a>() as <a href="html/idolnifi.html#idolnifi.TextOutputStream">outputstream</a></li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.DocumentAction.addContent">DocumentAction.addContent</a>(...)</li>
+		<li>with <a href="html/idolnifi.html#idolnifi.DocumentAction.addContent">DocumentAction.addContent</a>() as <a href="html/idolnifi.html#idolnifi.TextOutputStream">outputstream</a></li>
+	</ul>
+</div>

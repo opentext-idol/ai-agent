@@ -1,0 +1,1193 @@
+{
+    "and": {
+        "displayName": "and",
+        "description": "True when all of the condition policies are true.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "condition": {
+                "name": "condition",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Boolean",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "equals": {
+        "displayName": "equals",
+        "description": "True when the left and right values are equal.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "left": {
+                "name": "left",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "right": {
+                "name": "right",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "expression": {
+        "displayName": "expression",
+        "description": "Evaluates an IDOL-extended NiFi Expression Language string. Access document metadata with the idol.xmlmetadata:<xpath> token and document properties with idol.doc:<fn>, alongside standard EL. result-type selects string (default), boolean, or number.",
+        "category": "Value",
+        "advanced": true,
+        "configDescriptors": {
+            "value": {
+                "name": "value",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": true,
+                "isHidden": false,
+                "description": "Expression to evaluate, e.g. ${\"idol.xmlmetadata:sensitive\":equals('true')}."
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": true
+    },
+    "for-each-flowfile": {
+        "displayName": "for-each-flowfile",
+        "description": "Processes a batch of FlowFiles, running 'do' for each with the FlowFile in scope. A FlowFile not transferred or removed by 'do' is transferred to the terminal relationship. Wrap 'do' in 'try' to isolate a single FlowFile's failure; otherwise an error rolls back the whole batch.",
+        "category": "FlowFile",
+        "advanced": false,
+        "configDescriptors": {
+            "do": {
+                "name": "do",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                    "flowfile": [
+                        "org.apache.nifi.flowfile.FlowFile"
+                    ]
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false,
+                "description": "Policies to run for each FlowFile."
+            },
+            "batch-size": {
+                "name": "batch-size",
+                "valueType": "Number",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": 100,
+                "isHidden": false,
+                "description": "Maximum number of FlowFiles to process per trigger; 0 for all available."
+            },
+            "terminal-relationship": {
+                "name": "terminal-relationship",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "success",
+                "isHidden": false,
+                "description": "Relationship an unresolved FlowFile is transferred to after 'do'. Empty or 'none' leaves it for an inner policy to resolve.",
+                "isRelationship": true
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "get-context-attribute": {
+        "displayName": "get-context-attribute",
+        "description": "Reads a workflow-scoped context attribute by name.",
+        "category": "Context",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "get-flowfile-attribute": {
+        "displayName": "get-flowfile-attribute",
+        "description": "Reads a FlowFile attribute by name (empty string if absent).",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "get-flowfile-size": {
+        "displayName": "get-flowfile-size",
+        "description": "The FlowFile content size in bytes.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "java.math.BigDecimal",
+            "java.lang.Number",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "get-flowfile-start-date": {
+        "displayName": "get-flowfile-start-date",
+        "description": "The FlowFile entry date (or lineage start date) as epoch milliseconds.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+            "use-lineage": {
+                "name": "use-lineage",
+                "valueType": "Boolean",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": false,
+                "isHidden": false,
+                "description": "Use the lineage start date (oldest ancestor) instead of this FlowFile's entry date."
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "java.math.BigDecimal",
+            "java.lang.Number",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "get-metadata": {
+        "displayName": "get-metadata",
+        "description": "Reads IDOL document metadata by XPath, optionally running a for-each policy per matched node. For conditions/values, prefer the idol.xmlmetadata functions of expression.",
+        "category": "Document",
+        "advanced": true,
+        "configDescriptors": {
+            "field-path": {
+                "name": "field-path",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "for-each": {
+                "name": "for-each",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false
+            },
+            "for-each-name-attr": {
+                "name": "for-each-name-attr",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "_n",
+                "isHidden": true
+            },
+            "for-each-value-attr": {
+                "name": "for-each-value-attr",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "_v",
+                "isHidden": true
+            },
+            "for-each-result-attr": {
+                "name": "for-each-result-attr",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "_r",
+                "isHidden": true
+            }
+        },
+        "requiredContextObjects": {
+            "document": [
+                "idol.nifi.framework.document.Document",
+                "java.lang.Object"
+            ]
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "has-context-attribute": {
+        "displayName": "has-context-attribute",
+        "description": "True when a context attribute with the given name is set.",
+        "category": "Context",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "has-flowfile-attribute": {
+        "displayName": "has-flowfile-attribute",
+        "description": "True when the FlowFile has the named attribute.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "if": {
+        "displayName": "if",
+        "description": "Runs the 'then' policy when all conditions are true, otherwise the 'else' policy.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "condition": {
+                "name": "condition",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Boolean",
+                    "java.lang.Object"
+                ],
+                "isHidden": false,
+                "description": "Conditions to evaluate; all must be true for the 'then' branch to run."
+            },
+            "then": {
+                "name": "then",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false,
+                "description": "Policy run when the conditions are true."
+            },
+            "else": {
+                "name": "else",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false,
+                "description": "Policy run when the conditions are false."
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "less-than": {
+        "displayName": "less-than",
+        "description": "True when the left number is less than the right number.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "left": {
+                "name": "left",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.math.BigDecimal",
+                    "java.lang.Number",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "right": {
+                "name": "right",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.math.BigDecimal",
+                    "java.lang.Number",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "matches-regex": {
+        "displayName": "matches-regex",
+        "description": "True when the value matches the regular expression; capture groups are exposed as context attributes _1, _2, ...",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "regex": {
+                "name": "regex",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": true,
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "not": {
+        "displayName": "not",
+        "description": "Negates a boolean condition.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "condition": {
+                "name": "condition",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Boolean",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "or": {
+        "displayName": "or",
+        "description": "True when any of the condition policies is true.",
+        "category": "Logic",
+        "advanced": true,
+        "configDescriptors": {
+            "condition": {
+                "name": "condition",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Boolean",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "orchestrate": {
+        "displayName": "orchestrate",
+        "description": "Drives a FlowFile through an ordered set of steps (each a sub-flow reached by a relationship that routes back to this processor), tracking progress via wf.* attributes, until all steps are done (on-complete), an exception is seen (on-exception), or the iteration guard trips (on-loop-limit).",
+        "category": "Orchestration",
+        "advanced": false,
+        "configDescriptors": {
+            "steps": {
+                "name": "steps",
+                "valueType": "Group",
+                "isList": true,
+                "isRequired": true,
+                "isHidden": false,
+                "description": "Ordered workflow steps; each is dispatched to its relationship until marked done on return.",
+                "fields": {
+                    "name": {
+                        "name": "name",
+                        "valueType": "String",
+                        "isList": false,
+                        "isRequired": true,
+                        "isHidden": false,
+                        "description": "Unique step name (letters, digits, _ - . :); tracked as wf.step.<name>. It keys workflow state on the FlowFile, so keep it stable - renaming a step strands in-flight FlowFiles that already carry the old wf.step.<name>."
+                    },
+                    "relationship": {
+                        "name": "relationship",
+                        "valueType": "String",
+                        "isList": false,
+                        "isRequired": true,
+                        "isHidden": false,
+                        "description": "Relationship this step is routed to (letters, digits, _ - . :); its sub-flow routes the FlowFile back here.",
+                        "isRelationship": true
+                    },
+                    "when": {
+                        "name": "when",
+                        "valueType": "Policy",
+                        "isList": false,
+                        "isRequired": false,
+                        "assignedContextObjects": {
+                        },
+                        "policyResultType": [
+                            "java.lang.Boolean",
+                            "java.lang.Object"
+                        ],
+                        "isHidden": false,
+                        "description": "Optional condition; the step runs only when this is true."
+                    }
+                }
+            },
+            "state-prefix": {
+                "name": "state-prefix",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": true,
+                "defaultJson": "wf",
+                "isHidden": false,
+                "description": "Namespace for the workflow-state attributes (<prefix>.iter, <prefix>.current, <prefix>.step.<name>); default wf. Use a distinct namespace if more than one orchestrate acts on the same FlowFile, to avoid state collisions."
+            },
+            "clean-state": {
+                "name": "clean-state",
+                "valueType": "Boolean",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": true,
+                "isHidden": false,
+                "description": "Remove the state-prefix tracking attributes before on-complete."
+            },
+            "on-complete": {
+                "name": "on-complete",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "defaultJson": {
+                    "type": "transfer-flowfile",
+                    "relationship": "success"
+                },
+                "isHidden": false,
+                "description": "Policy run when all steps are complete."
+            },
+            "exception-attribute": {
+                "name": "exception-attribute",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "idol.exception",
+                "isHidden": true,
+                "description": "If present on return, the current step is treated as failed and on-exception runs."
+            },
+            "on-exception": {
+                "name": "on-exception",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "defaultJson": {
+                    "type": "transfer-flowfile",
+                    "relationship": "failure"
+                },
+                "isHidden": true,
+                "description": "Policy run when the exception attribute is present."
+            },
+            "max-iterations": {
+                "name": "max-iterations",
+                "valueType": "Number",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": 100,
+                "isHidden": true,
+                "description": "Maximum passes before routing to on-loop-limit (guards against runaway loops)."
+            },
+            "on-loop-limit": {
+                "name": "on-loop-limit",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": false,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "defaultJson": {
+                    "type": "transfer-flowfile",
+                    "relationship": "failure"
+                },
+                "isHidden": true,
+                "description": "Policy run when the iteration guard trips."
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "remove-flowfile": {
+        "displayName": "remove-flowfile",
+        "description": "Removes (drops) the FlowFile from the session.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "requeue-flowfile": {
+        "displayName": "requeue-flowfile",
+        "description": "Transfers the FlowFile back to the processor's own incoming queue for reprocessing (NiFi's no-relationship transfer), rather than to a named relationship. Use to defer or retry a FlowFile. This is not an output relationship, so it needs no connection.",
+        "category": "Routing",
+        "advanced": true,
+        "configDescriptors": {
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "root-policy": {
+        "displayName": "root-policy",
+        "description": "The implicit root of a policy tree; runs its 'policies' in order. Not selectable as a child.",
+        "category": "System",
+        "advanced": true,
+        "configDescriptors": {
+            "policies": {
+                "name": "policies",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "route-by-metadata": {
+        "displayName": "route-by-metadata",
+        "description": "Transfers the FlowFile to one relationship when a metadata field matches a pattern, otherwise to another. Matches if any node selected by the field path satisfies the comparison.",
+        "category": "Routing",
+        "advanced": false,
+        "configDescriptors": {
+            "field-path": {
+                "name": "field-path",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false,
+                "description": "XPath of the metadata field(s) to test, e.g. \"DRECONTENT\" or \"//author\"."
+            },
+            "mode": {
+                "name": "mode",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "equals",
+                "isHidden": false,
+                "description": "How the field value is compared with the pattern.",
+                "allowedValues": [
+                    "equals",
+                    "contains",
+                    "regex"
+                ]
+            },
+            "pattern": {
+                "name": "pattern",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false,
+                "description": "Value to compare against. A literal for 'equals'/'contains', a regular expression for 'regex'."
+            },
+            "match-relationship": {
+                "name": "match-relationship",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "matched",
+                "isHidden": false,
+                "description": "Relationship the FlowFile is transferred to when the field matches.",
+                "isRelationship": true
+            },
+            "else-relationship": {
+                "name": "else-relationship",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "success",
+                "isHidden": false,
+                "description": "Relationship the FlowFile is transferred to when the field does not match.",
+                "isRelationship": true
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ],
+            "document": [
+                "idol.nifi.framework.document.Document",
+                "java.lang.Object"
+            ]
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "set-context-attribute": {
+        "displayName": "set-context-attribute",
+        "description": "Sets a workflow-scoped context attribute and returns its value.",
+        "category": "Context",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "set-flowfile-attribute": {
+        "displayName": "set-flowfile-attribute",
+        "description": "Sets a FlowFile attribute and returns the value.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+            "name": {
+                "name": "name",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            },
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "string-to-boolean": {
+        "displayName": "string-to-boolean",
+        "description": "Parses a string ('true'/'false') into a boolean.",
+        "category": "Conversion",
+        "advanced": true,
+        "configDescriptors": {
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "string-to-number": {
+        "displayName": "string-to-number",
+        "description": "Parses a string into a number.",
+        "category": "Conversion",
+        "advanced": true,
+        "configDescriptors": {
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.math.BigDecimal",
+            "java.lang.Number",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "throw": {
+        "displayName": "throw",
+        "description": "Raises a PolicyException with the given message (caught by an enclosing try).",
+        "category": "Control",
+        "advanced": true,
+        "configDescriptors": {
+            "message": {
+                "name": "message",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.String",
+                    "java.lang.Object"
+                ],
+                "defaultJson": "Policy error",
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": true
+    },
+    "transfer-flowfile": {
+        "displayName": "transfer-flowfile",
+        "description": "Transfers the FlowFile to a named relationship.",
+        "category": "Routing",
+        "advanced": true,
+        "configDescriptors": {
+            "relationship": {
+                "name": "relationship",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": true,
+                "defaultJson": "success",
+                "isHidden": false,
+                "description": "Name of the relationship to transfer the FlowFile to. A required, static name (not a policy) so every exit relationship is statically enumerable for auto-population and validation. To send the FlowFile back to the incoming queue instead, use requeue-flowfile.",
+                "isRelationship": true
+            }
+        },
+        "requiredContextObjects": {
+            "flowfile": [
+                "org.apache.nifi.flowfile.FlowFile"
+            ]
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "try": {
+        "displayName": "try",
+        "description": "Runs 'do'; if it throws one of the 'catch' exception types, runs 'on-exception' instead.",
+        "category": "Control",
+        "advanced": true,
+        "configDescriptors": {
+            "do": {
+                "name": "do",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false
+            },
+            "catch": {
+                "name": "catch",
+                "valueType": "String",
+                "isList": true,
+                "isRequired": false,
+                "defaultJson": [
+                    "PolicyException",
+                    "PolicyRuntimeException"
+                ],
+                "isHidden": false,
+                "description": "Exception class simple or full names to catch; defaults to PolicyException/PolicyRuntimeException."
+            },
+            "on-exception": {
+                "name": "on-exception",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                    "exception": [
+                        "idol.nifi.policy.PolicyException",
+                        "java.lang.Exception",
+                        "java.lang.Throwable",
+                        "java.lang.Object"
+                    ]
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "value-to-string": {
+        "displayName": "value-to-string",
+        "description": "Converts any value to its string form.",
+        "category": "Conversion",
+        "advanced": true,
+        "configDescriptors": {
+            "value": {
+                "name": "value",
+                "valueType": "Policy",
+                "isList": false,
+                "isRequired": true,
+                "assignedContextObjects": {
+                },
+                "policyResultType": [
+                    "java.lang.Object"
+                ],
+                "isHidden": false
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "java.lang.String",
+            "java.lang.Object"
+        ],
+        "resultTypeAllowCast": false
+    },
+    "with-document": {
+        "displayName": "with-document",
+        "description": "Wraps the FlowFile as an IDOL Document and runs 'do' with it in context, reusing an existing Document for the same FlowFile where possible.",
+        "category": "Document",
+        "advanced": false,
+        "configDescriptors": {
+            "do": {
+                "name": "do",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                    "flowfile": [
+                        "org.apache.nifi.flowfile.FlowFile"
+                    ],
+                    "document": [
+                        "idol.nifi.framework.document.Document",
+                        "java.lang.Object"
+                    ]
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false,
+                "description": "Policies to run with the Document (and FlowFile) in scope."
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    },
+    "with-flowfile": {
+        "displayName": "with-flowfile",
+        "description": "Establishes a FlowFile in context and runs 'do' against it. Acquires the next FlowFile from the queue (source=next) or reuses the one in scope (source=current). After 'do', a FlowFile not already transferred or removed is transferred to the terminal relationship.",
+        "category": "FlowFile",
+        "advanced": true,
+        "configDescriptors": {
+            "do": {
+                "name": "do",
+                "valueType": "Policy",
+                "isList": true,
+                "isRequired": true,
+                "assignedContextObjects": {
+                    "flowfile": [
+                        "org.apache.nifi.flowfile.FlowFile"
+                    ]
+                },
+                "policyResultType": [
+                    "void"
+                ],
+                "isHidden": false,
+                "description": "Policies to run with the FlowFile in scope."
+            },
+            "terminal-relationship": {
+                "name": "terminal-relationship",
+                "valueType": "String",
+                "isList": false,
+                "isRequired": false,
+                "defaultJson": "success",
+                "isHidden": false,
+                "description": "Relationship an unresolved FlowFile is transferred to after 'do'. Empty or 'none' leaves it for an inner policy to resolve.",
+                "isRelationship": true
+            }
+        },
+        "requiredContextObjects": {
+        },
+        "resultType": [
+            "void"
+        ]
+    }
+}

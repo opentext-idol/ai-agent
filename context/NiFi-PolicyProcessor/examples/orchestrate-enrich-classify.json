@@ -1,0 +1,23 @@
+{
+    "policies": [{
+        "type": "with-document",
+        "do": [{
+            "type": "orchestrate",
+            "steps": [
+                { "name": "enrich", "relationship": "enrich" },
+                { "name": "classify", "relationship": "classify",
+                  "when": { "type": "expression", "type:result-type": "boolean",
+                            "value": "${'idol.xmlmetadata:needsClassification':equals('true')}" } }
+            ],
+            "max-iterations": 20,
+            "on-exception": { "type": "transfer-flowfile", "relationship": "error" },
+            "on-complete": {
+                "type": "if",
+                "condition": { "type": "expression", "type:result-type": "boolean",
+                    "value": "${'idol.xmlmetadata:classification/confidence':equals('high')}" },
+                "then": { "type": "transfer-flowfile", "relationship": "priority" },
+                "else": { "type": "transfer-flowfile", "relationship": "index" }
+            }
+        }]
+    }]
+}

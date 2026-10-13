@@ -1,0 +1,16 @@
+{
+    "policies": [{
+        "type": "with-flowfile",
+        "do": [{
+            "type": "with-document",
+            "do": [{
+                "type": "route-by-metadata",
+                "field-path": "sensitive",
+                "mode": "equals",
+                "pattern": "true",
+                "match-relationship": "review",
+                "else-relationship": "index"
+            }]
+        }]
+    }]
+}

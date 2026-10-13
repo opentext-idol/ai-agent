@@ -1,0 +1,18 @@
+/*{
+    "name": "Rename a field",
+    "info": "The object form bridges a naming gap: the document element is <zip> but the lookup refers to it as postcode."
+}*/
+{
+    "metadata": [
+        {
+            "id": "postcode_metadata",
+            "path": ".",
+            "fields": [
+                { "name": "postcode", "path": "zip" },
+                "place",
+                "latitude",
+                "longitude"
+            ]
+        }
+    ]
+}

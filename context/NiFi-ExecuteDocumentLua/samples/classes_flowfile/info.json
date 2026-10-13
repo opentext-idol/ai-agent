@@ -1,0 +1,4 @@
+{
+    "name": "FlowFile and Session class examples",
+    "info": "A collection of example code fragments using LuaFlowFileDocument and LuaProcessorSession classes."
+}

@@ -1,0 +1,26 @@
+/*{
+    "name": "Derived outputs",
+    "info": "Outputs need not be raw columns - NiFi EL assembles them: a formatted place string and a WKT geo-point built from longitude + latitude."
+}*/
+{
+    "lookup": [
+        {
+            "id": "zip_to_geo",
+            "metadata_id": "geo_metadata",
+            "data_id": "zip_data",
+            "inputs": ["postcode"],
+            "outputs": [
+                "latitude",
+                "longitude",
+                {
+                    "name": "place",
+                    "expr": "${literal('${place}, ${region}, ${country}'):replaceAll('^(, )+|(, )+(?=, |$)', '')}"
+                },
+                {
+                    "name": "geopoint",
+                    "expr": "${literal('POINT(${longitude} ${latitude})')}"
+                }
+            ]
+        }
+    ]
+}

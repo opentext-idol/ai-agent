@@ -1,0 +1,21 @@
+<!--{
+    "name": "Filename parts"
+}-->
+<div>
+    <p>
+        Filename parts of a FlowFileDocument are segments of a FlowFile containing the path of a file on the filesystem.
+		The file may be owned by the part, meaning that it would be deleted when the part is deleted.
+    </p>
+    <p>
+        The following methods can be used to read and write filename parts in addition to the inherited operations from <a href="html/idolnifi.html#idolnifi.FileAction">FileAction</a>:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>owned = <a href="html/idolnifi.html#idolnifi.ContentFilenameAction.hasOwnership">ContentFilenameAction.hasOwnership</a>()</li>
+		<li><a href="html/idolnifi.html#idolnifi.ContentFilenameAction.disownFile">ContentFilenameAction.disownFile</a>()</li>
+		<li>fileexists = <a href="html/idolnifi.html#idolnifi.ContentFilenameAction.exists">ContentFilenameAction.exists</a>()</li>
+		<li>filename = <a href="html/idolnifi.html#idolnifi.ContentFilenameAction.getFilename">ContentFilenameAction.getFilename</a>()</li>
+		<br/>
+		<li>with <a href="html/idolnifi.html#idolnifi.ContentFilenameAction.readFile">ContentFilenameAction.readFile</a>() as <a href="html/idolnifi.html#idolnifi.InputStream">inputstream</a></li>
+		<li><a href="html/idolnifi.html#idolnifi.ContentFilenameAction.replaceFilename">ContentFilenameAction.replaceFilename</a>(...)</li>
+	</ul>
+</div>

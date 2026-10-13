@@ -1,0 +1,4 @@
+{
+    "name": "Lookup",
+    "info": "Lookup pipelines: which metadata drives the query, which data source answers it, and how field values are transformed in and out."
+}

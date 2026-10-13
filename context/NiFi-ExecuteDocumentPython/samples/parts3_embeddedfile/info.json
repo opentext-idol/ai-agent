@@ -1,0 +1,4 @@
+{
+    "name": "Parts of FlowFileDocument: Accessing embedded files",
+    "info": "Reading and writing embedded file parts of a FlowFileDocument"
+}

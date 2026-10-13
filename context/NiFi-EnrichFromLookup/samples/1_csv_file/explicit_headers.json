@@ -1,0 +1,14 @@
+/*{
+    "name": "Explicit headers (no header row)",
+    "info": "When the file has no header row, set use_header_row false and name the columns positionally with headers."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "zip_data",
+            "file_key": "zip_csv",
+            "use_header_row": false,
+            "headers": ["postcode", "place", "region", "country", "latitude", "longitude"]
+        }
+    ]
+}

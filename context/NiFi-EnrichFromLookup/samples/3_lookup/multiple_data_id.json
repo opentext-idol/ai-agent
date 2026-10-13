@@ -1,0 +1,15 @@
+/*{
+    "name": "Multiple data sources (chained)",
+    "info": "data_id as an array queries each source in turn, merging its outputs into the key map - so a later source can filter on a value the first one produced."
+}*/
+{
+    "lookup": [
+        {
+            "id": "store_then_region",
+            "metadata_id": "store_metadata",
+            "data_id": ["store_directory", "region_directory"],
+            "inputs": ["store_id"],
+            "outputs": ["store_name", "region_name", "region_manager"]
+        }
+    ]
+}

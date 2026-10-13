@@ -1,0 +1,28 @@
+/*{
+    "name": "Case-insensitive matching",
+    "info": "Normalise the same way on both sides: a csv_file names expression and the lookup input both toUpper, so the stored and queried values always agree."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "country_data",
+            "file_key": "country_csv",
+            "headers": ["country", "calling_code"],
+            "names": [
+                { "name": "country", "expr": "${country:toUpper()}" },
+                "calling_code"
+            ]
+        }
+    ],
+    "lookup": [
+        {
+            "id": "country_to_code",
+            "metadata_id": "country_metadata",
+            "data_id": "country_data",
+            "inputs": [
+                { "name": "country", "expr": "${country:toUpper()}", "required": true, "pattern": ".+" }
+            ],
+            "outputs": ["calling_code"]
+        }
+    ]
+}

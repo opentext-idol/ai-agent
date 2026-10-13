@@ -1,0 +1,4 @@
+{
+    "name": "Metadata",
+    "info": "The document's XML field structure - which elements a lookup reads from and writes its results back to."
+}

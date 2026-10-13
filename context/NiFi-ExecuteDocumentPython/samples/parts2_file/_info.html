@@ -1,0 +1,40 @@
+<!--{
+    "name": "File parts"
+}-->
+<div>
+    <p>
+        File parts of a FlowFileDocument are segments of a FlowFile containing binary data or references to externally stored files.
+    </p>
+    <p>
+        There are three types of file part:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>Embedded files, accessed via <a href="html/idolnifi.html#idolnifi.DocumentAction.isEmbeddedFilePart">DocumentAction.isEmbeddedFilePart</a>() and <a href="html/idolnifi.html#idolnifi.ContentFileAction">ContentFileAction</a></li>
+		<li>Filenames referencing files on the filesystem, accessed via <a href="html/idolnifi.html#idolnifi.DocumentAction.isFilenamePart">DocumentAction.isFilenamePart</a>() and <a href="html/idolnifi.html#idolnifi.ContentFileAction">ContentFilenameAction</a></li>
+		<li>External files referencing files in external storage, accessed via <a href="html/idolnifi.html#idolnifi.DocumentAction.isExternalFilePart">DocumentAction.isExternalFilePart</a>() and <a href="html/idolnifi.html#idolnifi.ContentFileAction">ExternalFileAction</a></li>
+	</ul>
+    <p>
+        The following methods can be used to read and write file parts of any type:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>with <a href="html/idolnifi.html#idolnifi.FileAction.readAsFilename">FileAction.readAsFilename</a>() as tmpfilename</li>
+		<li>with <a href="html/idolnifi.html#idolnifi.FileAction.readFile">FileAction.readFile</a>() as <a href="html/idolnifi.html#idolnifi.InputStream">inputstream</a></li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.FileAction.transferToFile">FileAction.transferToFile</a>(...)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FileAction.transferToFilename">FileAction.transferToFilename</a>(...)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FileAction.transferToExternalFile">FileAction.transferToExternalFile</a>(...)</li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.FileAction.transformAsFilename">FileAction.transformAsFilename</a>(...)</li>
+		<li>with <a href="html/idolnifi.html#idolnifi.FileAction.transformFile">FileAction.transformFile</a>() as (<a href="html/idolnifi.html#idolnifi.InputStream">inputstream</a>,<a href="html/idolnifi.html#idolnifi.OutputStream">outputstream</a>)</li>
+	</ul>
+    <p>
+        The display filename and the file mime-type can be set using the following methods on any file part:
+    </p>
+	<ul style="list-style-type: disc">
+		<li><a href="html/idolnifi.html#idolnifi.FilePartAction.transferToFile">FilePartAction.setFileDisplayName</a>(...)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FilePartAction.transferToFilename">FilePartAction.setFileMimeType</a>(...)</li>
+	</ul>
+    <p>
+        The subclasses of <a href="html/idolnifi.html#idolnifi.FileAction">FileAction</a> provide additional operations for the specific file part types.
+    </p>
+</div>

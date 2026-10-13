@@ -1,0 +1,20 @@
+/*{
+    "name": "Computed column",
+    "info": "A names expression can transform the raw value before it is stored - here normalising the country to upper case so case-insensitive matching works."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "zip_data",
+            "file_key": "zip_csv",
+            "headers": ["country", "zip", "place", "latitude", "longitude"],
+            "names": [
+                { "name": "country", "expr": "${country:toUpper()}" },
+                { "name": "postcode", "expr": "${zip}" },
+                "place",
+                "latitude",
+                "longitude"
+            ]
+        }
+    ]
+}

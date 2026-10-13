@@ -1,0 +1,18 @@
+/*{
+    "name": "Constant input (no document field)",
+    "info": "${literal(...)} supplies a fixed query key with no matching document element - here a hard-coded country alongside the postcode read from the document."
+}*/
+{
+    "lookup": [
+        {
+            "id": "us_zip_to_place",
+            "metadata_id": "postcode_metadata",
+            "data_id": "zip_data",
+            "inputs": [
+                { "name": "country", "expr": "${literal('US')}", "required": true, "pattern": ".+" },
+                { "name": "postcode", "expr": "${postcode:replaceAll('-.*', '')}", "required": true, "pattern": ".+" }
+            ],
+            "outputs": ["place", "latitude", "longitude"]
+        }
+    ]
+}

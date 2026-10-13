@@ -1,0 +1,17 @@
+/*{
+    "name": "Indexes",
+    "info": "Each index is a set of columns. A single-column index serves single-key lookups; a compound index serves multi-key lookups that filter on all its columns."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "zip_data",
+            "file_key": "zip_csv",
+            "headers": ["country", "postcode", "place", "latitude", "longitude"],
+            "indexes": [
+                ["postcode"],
+                ["country", "postcode"]
+            ]
+        }
+    ]
+}

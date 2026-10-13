@@ -1,0 +1,22 @@
+<!--{
+    "name": "External file parts"
+}-->
+<div>
+    <p>
+        External file parts of a FlowFileDocument are segments of a FlowFile containing the details to access a file in external storage.
+		The external file may be owned by the part, meaning that it would be deleted when the part is deleted.
+		An IdolFlowFileService can be used to manage the storage details used by the parts via a Service Key string.
+    </p>
+    <p>
+        The following methods can be used to read and write external file parts in addition to the inherited operations from <a href="html/idolnifi.html#idolnifi.FileAction">FileAction</a>:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>owned = <a href="html/idolnifi.html#idolnifi.ExternalFileAction.hasOwnership">ExternalFileAction.hasOwnership</a>()</li>
+		<li><a href="html/idolnifi.html#idolnifi.ExternalFileAction.disownFile">ExternalFileAction.disownFile</a>()</li>
+		<li>fileexists = <a href="html/idolnifi.html#idolnifi.ExternalFileAction.exists">ExternalFileAction.exists</a>()</li>
+		<li>url = <a href="html/idolnifi.html#idolnifi.ExternalFileAction.getDownloadUrl">ExternalFileAction.getDownloadUrl</a>()</li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.ExternalFileLocator">locator</a> = <a href="html/idolnifi.html#idolnifi.ExternalFileAction.getLocator">ExternalFileAction.getLocator</a>()</li>
+		<li><a href="html/idolnifi.html#idolnifi.ExternalFileAction.replaceLocator">ExternalFileAction.replaceLocator</a>(...)</li>
+	</ul>
+</div>

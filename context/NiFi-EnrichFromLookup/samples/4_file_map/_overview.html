@@ -1,0 +1,23 @@
+<!--{
+    "name": "About file_map",
+    "info": "Logical file keys, path resolution, and uploading data through the UI"
+}-->
+<div>
+    <p>
+        A <code>file_map</code> block is a flat set of <b>key &rarr; filename</b> entries.
+        A <code>csv_file</code> refers to a key through its <code>file_key</code>, so the data
+        file can be relocated or replaced without editing the data source or the lookups.
+    </p>
+    <p>
+        At most one <code>file_map</code> block is allowed per configuration file, but its keys
+        are <b>global</b> - merged across every loaded file, and a duplicate key anywhere is an
+        error. A relative filename resolves against the configuration file's own directory, and
+        must stay within a configured directory.
+    </p>
+    <p>
+        In the <b>Blocks</b> tab, each file_map entry has upload and download controls: upload
+        replaces the data file (stored gzip-compressed in the managed directory), and download
+        retrieves the stored copy. Gzip-compressed source files (<code>.gz</code>) are read
+        transparently.
+    </p>
+</div>

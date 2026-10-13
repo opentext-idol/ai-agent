@@ -1,0 +1,23 @@
+/*{
+    "name": "Repeating + nested elements",
+    "info": "path selects every <location>; a nameless container descends into address/ so its fields resolve relative to each matched location."
+}*/
+{
+    "metadata": [
+        {
+            "id": "location_metadata",
+            "path": "location",
+            "fields": [
+                {
+                    "path": "address",
+                    "fields": [
+                        { "name": "postcode", "path": "zip" },
+                        "place",
+                        "latitude",
+                        "longitude"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+{
+    "name": "File map",
+    "info": "Logical aliases from a key name to a data file path, so data sources reference a stable key instead of a hard-coded filename."
+}

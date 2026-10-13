@@ -1,0 +1,12 @@
+/*{
+    "name": "Minimal csv_file",
+    "info": "Just an id and a file_key. With use_header_row defaulting to true, column names come from the file's first row."
+}*/
+{
+    "csv_file": [
+        {
+            "id": "zip_data",
+            "file_key": "zip_csv"
+        }
+    ]
+}

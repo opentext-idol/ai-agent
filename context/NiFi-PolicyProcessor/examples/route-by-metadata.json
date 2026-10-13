@@ -1,0 +1,16 @@
+{
+    "policies": [{
+        "type": "with-flowfile",
+        "do": [{
+            "type": "with-document",
+            "do": [{
+                "type": "route-by-metadata",
+                "field-path": "doctype",
+                "mode": "equals",
+                "pattern": "invoice",
+                "match-relationship": "invoices",
+                "else-relationship": "success"
+            }]
+        }]
+    }]
+}

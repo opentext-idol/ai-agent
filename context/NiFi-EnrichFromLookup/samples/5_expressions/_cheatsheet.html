@@ -1,0 +1,44 @@
+<!--{
+    "name": "Expression cheatsheet",
+    "info": "Common NiFi EL patterns for csv_file names and lookup inputs / outputs"
+}-->
+<div>
+    <p>
+        NiFi Expression Language is available in <code>csv_file.names</code> expressions
+        (where attributes are the raw CSV column values), <code>lookup.inputs</code>
+        (attributes are the document field values), and <code>lookup.outputs</code>
+        (attributes are the matched data row's column values). Dynamic processor properties
+        are available everywhere as <code>${property:Name}</code>.
+    </p>
+    <table style="border-collapse:collapse;border:1px solid #cccccc">
+        <tr style="border-bottom:1px solid #888888;font-weight:bold">
+            <th style="text-align:left;padding:4px 8px">Goal</th>
+            <th style="text-align:left;padding:4px 8px">Expression</th>
+        </tr>
+        <tr><td style="padding:4px 8px">Pass a value through unchanged</td>
+            <td style="padding:4px 8px"><code>${postcode}</code></td></tr>
+        <tr><td style="padding:4px 8px">Strip a ZIP+4 suffix</td>
+            <td style="padding:4px 8px"><code>${postcode:replaceAll('-.*', '')}</code></td></tr>
+        <tr><td style="padding:4px 8px">Remove spaces</td>
+            <td style="padding:4px 8px"><code>${postcode:replace(' ', '')}</code></td></tr>
+        <tr><td style="padding:4px 8px">Normalise to upper case</td>
+            <td style="padding:4px 8px"><code>${country:toUpper()}</code></td></tr>
+        <tr><td style="padding:4px 8px">First five characters</td>
+            <td style="padding:4px 8px"><code>${postcode:substring(0, 5)}</code></td></tr>
+        <tr><td style="padding:4px 8px">Constant value (no source field)</td>
+            <td style="padding:4px 8px"><code>${literal('US')}</code></td></tr>
+        <tr><td style="padding:4px 8px">Concatenate several columns</td>
+            <td style="padding:4px 8px"><code>${literal('${place}, ${region}, ${country}')}</code></td></tr>
+        <tr><td style="padding:4px 8px">Trim leading / dangling separators</td>
+            <td style="padding:4px 8px"><code>...:replaceAll('^(, )+|(, )+(?=, |$)', '')</code></td></tr>
+        <tr><td style="padding:4px 8px">WKT geo-point</td>
+            <td style="padding:4px 8px"><code>${literal('POINT(${longitude} ${latitude})')}</code></td></tr>
+        <tr><td style="padding:4px 8px">Read a dynamic property</td>
+            <td style="padding:4px 8px"><code>${property:default_country}</code></td></tr>
+    </table>
+    <p style="font-style:italic">
+        The <code>literal('...')</code> wrapper lets you embed several
+        <code>${column}</code> references inside one string before applying further functions
+        to the whole result - the basis of the concatenation and geo-point patterns above.
+    </p>
+</div>

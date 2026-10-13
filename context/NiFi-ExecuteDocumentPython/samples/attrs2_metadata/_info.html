@@ -1,0 +1,31 @@
+<!--{
+    "name": "XML Metadata"
+}-->
+<div>
+    <p>
+        The FlowFileDocument XML metadata is a block of XML that is usually stored as a FlowFile attribute 'idol.xmlmetadata'.
+    </p>
+    <p>
+		For large XML metadata, it may instead be stored as a special embedded XML part of the FlowFile content.  In this case the FlowFile attribute 'idol.xmlmetadata.embed' will be set to 'true'.
+    </p>
+    <p>
+        The following methods can be used to read and write the XML metadata:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>with <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getXmlMetadata">FlowFileDocument.getXmlMetadata</a>() as <a href="html/idolnifi.html#idolnifi.XmlElement">xml</a></li>
+		<li>xmlstr = <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getXmlMetadataString">FlowFileDocument.getXmlMetadataString</a>()</li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.setXmlMetadataString">FileAction.setXmlMetadataString</a>(xmlstr)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.clearXmlMetadata">FileAction.clearXmlMetadata</a>()</li>
+		<br/>
+		<li><a href="html/idolnifi.html#idolnifi.XmlElement">xml</a> = <a href="html/idolnifi.html#idolnifi.DocumentAction.getXmlMetadata">DocumentAction.getXmlMetadata</a>()</li>
+	</ul>
+    <p>
+        When iterating over document parts, the following method can be used to get access to the part XML metadata<br/>
+		(The &lt;part&nbsp;id="<a href="html/idolnifi.html#idolnifi.DocumentPartAction.getPartId">[PartId]</a>"/&gt; elements directly below the XML metadata root):
+    </p>
+	<ul style="list-style-type: disc">
+		<li><a href="html/idolnifi.html#idolnifi.XmlElement">xml</a> = <a href="html/idolnifi.html#idolnifi.DocumentPartAction.getPartXmlMetadata">DocumentPartAction.getPartXmlMetadata</a>()</li>
+		<li style="font-style: italic">for <a href="html/idolnifi.html#idolnifi.XmlElement">xml</a> in <a href="html/idolnifi.html#idolnifi.DocumentAction.getXmlMetadata">DocumentAction.getXmlMetadata</a>().<a href="html/idolnifi.html#idolnifi.XmlElement.getElementsByXPath">getElementsByXPath</a>("part[@id='{0}']".format(<a href="html/idolnifi.html#idolnifi.DocumentPartAction.getPartId">part.getPartId</a>()))</li>
+	</ul>
+</div>

@@ -1,0 +1,29 @@
+<!--{
+    "name": "FlowFile attributes"
+}-->
+<div>
+    <p>
+        The FlowFileDocument provides access to all the FlowFile attribute, and provides access to special attributes like idol.reference and idol.xmlmetadata, as well as any custom attributes.
+		Attributes may also be attached to document parts, and are assigned as FlowFile attributes named 'idol.doc.part.<a href="html/idolnifi.html#idolnifi.DocumentPartAction.getPartId">[PartId]</a>.[PartAttributeName]'.
+    </p>
+    <p>
+		Most attributes may be read and written directly from a FlowFileDocument.  Part attributes are specifically excluded as these should be accessed through part operations using <a href="html/idolnifi.html#idolnifi.DocumentPartAction">DocumentPartAction</a>.
+		There are specific accessor methods for special attributes like <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getReference">idol.reference</a> and <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getXmlMetadata">idol.xmlmetadata</a>.
+    </p>
+    <p>
+        The following methods can be used to read and write the FlowFile attributes:
+    </p>
+	<ul style="list-style-type: disc">
+		<li>value = <a href="html/idolnifi.html#idolnifi.FlowFileDocument.getAttribute">FlowFileDocument.getAttribute</a>(name)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.setAttribute">FlowFileDocument.setAttribute</a>(name, value)</li>
+		<li><a href="html/idolnifi.html#idolnifi.FlowFileDocument.removeAttribute">FlowFileDocument.removeAttribute</a>(name)</li>
+		<br/>
+		<li>value = <a href="html/idolnifi.html#idolnifi.DocumentAction.getAttribute">DocumentAction.getAttribute</a>(name)</li>
+		<li><a href="html/idolnifi.html#idolnifi.DocumentAction.setAttribute">DocumentAction.setAttribute</a>(name, value)</li>
+		<li><a href="html/idolnifi.html#idolnifi.DocumentAction.removeAttribute">DocumentAction.removeAttribute</a>(name)</li>
+		<br/>
+		<li>value = <a href="html/idolnifi.html#idolnifi.DocumentPartAction.getPartAttribute">DocumentPartAction.getPartAttribute</a>(name)</li>
+		<li><a href="html/idolnifi.html#idolnifi.DocumentPartAction.setPartAttribute">DocumentPartAction.setPartAttribute</a>(name, value)</li>
+		<li><a href="html/idolnifi.html#idolnifi.DocumentPartAction.removePartAttribute">DocumentPartAction.removePartAttribute</a>(name)</li>
+	</ul>
+</div>

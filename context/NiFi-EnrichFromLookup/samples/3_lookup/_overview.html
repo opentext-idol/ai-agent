@@ -1,0 +1,54 @@
+<!--{
+    "name": "About lookups",
+    "info": "How a lookup pipeline reads the document, queries a data source, and writes results back"
+}-->
+<div>
+    <p>
+        A <code>lookup</code> ties everything together. Each one names a
+        <code>metadata</code> definition (which fields to read from / write to the document),
+        one or more data sources via <code>data_id</code>, and two ordered transform lists:
+        <code>inputs</code> (build the query key) and <code>outputs</code> (shape the matched
+        row before writing it back).
+    </p>
+    <pre>
+document XML  --(metadata read)-->  field map
+field map     --(inputs)-->         query key
+query key     --(data source)-->    matching row
+matching row  --(outputs)-->        result values
+result values --(metadata write)--> document XML
+    </pre>
+    <p>
+        The <code>id</code> of a lookup is what the processor's
+        <b>Lookup Identifiers</b> property selects to run.
+        <code>metadata_id</code> and <code>data_id</code> reference other blocks by their id;
+        <code>data_id</code> may be a single id or an array (queried in sequence, results
+        merged into the key map between sources).
+    </p>
+    <h4>inputs</h4>
+    <p>
+        Each input maps a logical field name to the value sent to the data filter. Entries are
+        ANDed together. The bare-string form <code>"postcode"</code> passes the field through
+        unchanged; the object form applies a NiFi expression and optional validation:
+    </p>
+    <ul>
+        <li><code>name</code> - the metadata field name the value comes from.</li>
+        <li><code>expr</code> - a NiFi EL expression to transform it (optional). An expression
+            that reads nothing from the document - e.g. <code>${literal('US')}</code> - injects
+            a constant key, so no matching document element is needed.</li>
+        <li><code>required</code> - if true, an empty final value routes the document to
+            <code>failure</code>.</li>
+        <li><code>pattern</code> - a Java regex the value must match (after <code>expr</code>);
+            a mismatch routes to <code>failure</code>.</li>
+    </ul>
+    <h4>outputs</h4>
+    <p>
+        Each output maps a result name (which must be a field in the metadata definition) to the
+        value written back. The bare-string form writes a column through unchanged; the object
+        form derives a value from one or more columns via NiFi EL - for example concatenating
+        name parts, or formatting a <code>POINT(lon lat)</code> geo-point.
+    </p>
+    <p>
+        See the <b>Expressions</b> sample group for the common EL patterns used in
+        <code>inputs</code> and <code>outputs</code>.
+    </p>
+</div>

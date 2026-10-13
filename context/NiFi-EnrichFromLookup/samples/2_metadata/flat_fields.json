@@ -1,0 +1,13 @@
+/*{
+    "name": "Flat fields",
+    "info": "Bare-string fields at the document root, where each logical name matches its XML element name."
+}*/
+{
+    "metadata": [
+        {
+            "id": "postcode_metadata",
+            "path": ".",
+            "fields": ["postcode", "place", "latitude", "longitude"]
+        }
+    ]
+}

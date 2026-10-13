@@ -1,0 +1,15 @@
+/*{
+    "name": "Minimal lookup",
+    "info": "The smallest lookup: one input field, plain pass-through outputs. References a metadata + csv_file defined elsewhere."
+}*/
+{
+    "lookup": [
+        {
+            "id": "zip_to_place",
+            "metadata_id": "postcode_metadata",
+            "data_id": "zip_data",
+            "inputs": ["postcode"],
+            "outputs": ["place", "latitude", "longitude"]
+        }
+    ]
+}

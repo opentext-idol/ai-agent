@@ -1,0 +1,4 @@
+{
+    "name": "Expressions",
+    "info": "NiFi Expression Language patterns used in csv_file names and lookup inputs / outputs."
+}
