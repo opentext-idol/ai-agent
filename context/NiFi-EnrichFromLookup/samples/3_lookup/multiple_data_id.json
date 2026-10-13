@@ -2,6 +2,20 @@
     "name": "Multiple data sources (chained)",
     "info": "data_id as an array queries each source in turn, merging its outputs into the key map - so a later source can filter on a value the first one produced."
 }*/
+
+/*
+BEGIN COPYRIGHT NOTICE
+Copyright 2026 Open Text.
+
+The only warranties for products and services of Open Text and its affiliates and licensors
+("Open Text") are as may be set forth in the express warranty statements accompanying such
+products and services. Nothing herein should be construed as constituting an additional warranty.
+Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+The information contained herein is subject to change without notice.
+
+END COPYRIGHT NOTICE
+*/
+
 {
     "lookup": [
         {

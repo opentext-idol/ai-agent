@@ -3,6 +3,19 @@ name: ncm-deploy
 description: Stand up and configure the IDOL Connector Management API (NCM) - the API container, the NiFi it drives, PostgreSQL, and the connector/target/processing/NAR resources it serves - either through the Helm chart on a cluster or the same containers under plain Docker, using published release artifacts. Use when asked to deploy, configure, upgrade or diagnose an NCM installation, or to get an environment ready before configuring connectors.
 ---
 
+<!--
+BEGIN COPYRIGHT NOTICE
+Copyright 2026 Open Text.
+
+The only warranties for products and services of Open Text and its affiliates and licensors
+("Open Text") are as may be set forth in the express warranty statements accompanying such
+products and services. Nothing herein should be construed as constituting an additional warranty.
+Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+The information contained herein is subject to change without notice.
+
+END COPYRIGHT NOTICE
+-->
+
 # Deploying IDOL Connector Management
 
 NCM is an API that builds and operates NiFi flows. It is not useful on its own: it needs a
