@@ -1,0 +1,695 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://opentext.com/discover/entity-schema.schema.json",
+  "title": "Discover entity schema file",
+  "description": "A custom Discover entity schema file (the last layer), i.e. the value of the helm key dataEntity.customEntitySchema. Validate the YAML after parsing it (anchors and << merge keys resolved). Files are merged in order: the API's built-in schema, then 00-discover.yaml from the chart, then the custom schema. Cross-file rules this schema cannot check: every type named in links.entities, every link type named in links.entities/baseEntities, must be defined in some file; an entity type that already exists in an earlier file must be marked extension: true and may not redefine its properties; a link type may only be defined once; vectorModelId must be configured in the entity vector config; vectorProperties must name properties of the same type.",
+  "allOf": [
+    {
+      "$ref": "#/$defs/schemaFile"
+    },
+    {
+      "description": "Custom-file rules: the core schema always defines baseEntity (non-extensible) and the link base, so a custom file may only extend baseEntity (extension: true, optional properties only) and must not define baseLink.",
+      "properties": {
+        "baseEntity": {
+          "required": [
+            "extension"
+          ],
+          "properties": {
+            "extension": {
+              "const": true
+            },
+            "properties": {
+              "additionalProperties": {
+                "properties": {
+                  "required": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "not": {
+        "required": [
+          "baseLink"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "typeId": {
+      "description": "Entity or link type ID. Must not contain the character '1' (reserved by the entity store as a name separator). By convention entity type IDs end in 'Entity' (the UI strips that suffix for display) and link type IDs are UpperCamelCase.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^1]+$"
+    },
+    "propertyName": {
+      "description": "Property name. Must not contain '1' (reserved by the entity store as a name separator) or any of : = < > ( ) \" ' (reserved by the query syntax). By convention lowerCamelCase.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^1:=<>()\"']+$"
+    },
+    "category": {
+      "description": "Category. Values used by Discover: Entity, Document, General (custom demo types should use these), CoreUI (the UI's own types), Core, CoreCreated, System, AnalysisResult (the API's built-in types). The UI only offers entity types with category Entity or Document in the query builder, only lists Document types in the document list, and only offers link types with category Entity, Document or General, so a custom type with any other category is invisible to users.",
+      "enum": [
+        "Entity",
+        "Document",
+        "General",
+        "CoreUI",
+        "Core",
+        "CoreCreated",
+        "System",
+        "AnalysisResult"
+      ]
+    },
+    "multiplicity": {
+      "description": "Link multiplicity, from the source entity's point of view. Cannot be changed once data exists.",
+      "enum": [
+        "one-to-one",
+        "one-to-many",
+        "many-to-one",
+        "many-to-many"
+      ]
+    },
+    "entityBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/category"
+        },
+        "generic": {
+          "description": "Entities of this type can be created through the generic entity APIs. Default true.",
+          "type": "boolean"
+        },
+        "extensible": {
+          "description": "Later files may add required properties to this type. Default true. (Combined with the base entity's value, which is false in the core schema.)",
+          "type": "boolean"
+        },
+        "extension": {
+          "description": "Must be true when this entry extends a type defined in an earlier file (e.g. FileEntity, VideoDocumentEntity); must be absent/false for a new type.",
+          "type": "boolean"
+        },
+        "properties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "propertyNames": {
+            "$ref": "#/$defs/propertyName"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/property"
+          },
+          "description": "Properties of this type, keyed by name. An empty `properties:` (null) means none."
+        },
+        "links": {
+          "description": "Links allowed FROM entities of this type.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "entities": {
+              "description": "Target entity type ID -> link type IDs allowed to it.",
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/typeId"
+              },
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/typeId"
+                },
+                "uniqueItems": true
+              }
+            },
+            "baseEntities": {
+              "description": "Link type IDs allowed from this type to entities of ANY type.",
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/typeId"
+              },
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+    "entityType": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/entityBody"
+        },
+        {
+          "description": "A new entity type needs a category; an extension inherits it.",
+          "if": {
+            "not": {
+              "properties": {
+                "extension": {
+                  "const": true
+                }
+              },
+              "required": [
+                "extension"
+              ]
+            }
+          },
+          "then": {
+            "required": [
+              "category"
+            ]
+          }
+        }
+      ]
+    },
+    "linkType": {
+      "type": "object",
+      "required": [
+        "multiplicity",
+        "category"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/category"
+        },
+        "multiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "properties": {
+          "$ref": "#/$defs/linkProperties"
+        }
+      }
+    },
+    "linkProperties": {
+      "description": "Link properties. Links cannot have array (multi-valued) properties.",
+      "type": [
+        "object",
+        "null"
+      ],
+      "propertyNames": {
+        "$ref": "#/$defs/propertyName"
+      },
+      "additionalProperties": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/property"
+          },
+          {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "not": {
+                      "const": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "valueSchema": {
+      "description": "JSON Schema (draft 2020-12) for the property's values. The 'type' decides the Discover property type: boolean, integer, number (float), string, string+format date-time (date), object, geo (GeoJSON), idolacl, vector; or array with 'items' of one of those (multi-valued). idolacl cannot be multi-valued and vector must be (array of vector). Other keywords (enum, maxLength, minimum, pattern, ...) are applied when values are written.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "array",
+            "boolean",
+            "integer",
+            "number",
+            "string",
+            "object",
+            "geo",
+            "idolacl",
+            "vector"
+          ]
+        },
+        "format": {
+          "type": "string"
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "array"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "items"
+            ],
+            "properties": {
+              "items": {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "description": "Element type. Arrays of arrays and arrays of idolacl are not supported.",
+                    "enum": [
+                      "boolean",
+                      "integer",
+                      "number",
+                      "string",
+                      "object",
+                      "geo",
+                      "vector"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "A single vector is not supported: use {type: array, items: {type: vector}}.",
+          "not": {
+            "properties": {
+              "type": {
+                "const": "vector"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        }
+      ]
+    },
+    "property": {
+      "type": "object",
+      "required": [
+        "valueSchema"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "valueSchema": {
+          "$ref": "#/$defs/valueSchema"
+        },
+        "sortable": {
+          "type": "boolean",
+          "description": "Can sort by it. Single-valued boolean, integer, number, string or date only."
+        },
+        "filterable": {
+          "type": "boolean",
+          "description": "Can filter on it (exact match / ranges, parametric values in the UI). Not for object, idolacl or vector."
+        },
+        "searchable": {
+          "type": "boolean",
+          "description": "Full-text searchable. Single-valued, non-enum, non-date string only, and not combined with filterable or canAggregate."
+        },
+        "internal": {
+          "type": "boolean",
+          "description": "Hidden from the public API and UI."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Every entity of the type must have it. Cannot be added to an existing type once data exists."
+        },
+        "isTitle": {
+          "type": "boolean",
+          "description": "Used as the entity's display title. String only."
+        },
+        "canAggregate": {
+          "type": "boolean",
+          "description": "Usable in aggregations/charts. Requires filterable and single-valued. Defaults to true for filterable single-valued integer, number, boolean, date and enum-string properties."
+        },
+        "vectorModelId": {
+          "type": "string",
+          "description": "Vector model for a vector property; must be configured in the entity vector config. Required for vector properties."
+        },
+        "vectorProperties": {
+          "description": "Names of vector properties (on the same type) holding embeddings of this string property. Requires filterable or searchable.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/propertyName"
+          }
+        },
+        "apiReadable": {
+          "type": "boolean",
+          "description": "Returned by the API. Default true."
+        }
+      },
+      "allOf": [
+        {
+          "description": "sortable: single-valued boolean, integer, number or string (incl. date).",
+          "if": {
+            "properties": {
+              "sortable": {
+                "const": true
+              }
+            },
+            "required": [
+              "sortable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "boolean",
+                      "integer",
+                      "number",
+                      "string"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "filterable: not object, idolacl or vector (arrays of filterable types are fine).",
+          "if": {
+            "properties": {
+              "filterable": {
+                "const": true
+              }
+            },
+            "required": [
+              "filterable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "array",
+                      "boolean",
+                      "integer",
+                      "number",
+                      "string",
+                      "geo"
+                    ]
+                  },
+                  "items": {
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "boolean",
+                          "integer",
+                          "number",
+                          "string",
+                          "geo"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "searchable: a single-valued, non-enum, non-date string, and neither filterable nor canAggregate.",
+          "if": {
+            "properties": {
+              "searchable": {
+                "const": true
+              }
+            },
+            "required": [
+              "searchable"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "const": "string"
+                  },
+                  "format": {
+                    "not": {
+                      "const": "date-time"
+                    }
+                  }
+                },
+                "not": {
+                  "required": [
+                    "enum"
+                  ]
+                }
+              },
+              "filterable": {
+                "const": false
+              },
+              "canAggregate": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "description": "isTitle: string (not date).",
+          "if": {
+            "properties": {
+              "isTitle": {
+                "const": true
+              }
+            },
+            "required": [
+              "isTitle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valueSchema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "type": {
+                        "const": "string"
+                      },
+                      "format": {
+                        "not": {
+                          "const": "date-time"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "type": {
+                        "const": "array"
+                      },
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "const": "string"
+                          },
+                          "format": {
+                            "not": {
+                              "const": "date-time"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "description": "canAggregate: requires filterable, and single-valued.",
+          "if": {
+            "properties": {
+              "canAggregate": {
+                "const": true
+              }
+            },
+            "required": [
+              "canAggregate"
+            ]
+          },
+          "then": {
+            "required": [
+              "filterable"
+            ],
+            "properties": {
+              "filterable": {
+                "const": true
+              },
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "not": {
+                      "const": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "description": "vector properties (array of vector) need a vectorModelId, and only they may have one.",
+          "if": {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "const": "array"
+                  },
+                  "items": {
+                    "properties": {
+                      "type": {
+                        "const": "vector"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "vectorModelId"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "vectorModelId"
+              ]
+            }
+          }
+        },
+        {
+          "description": "vectorProperties: string properties only, and needs filterable or searchable.",
+          "if": {
+            "properties": {
+              "vectorProperties": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "vectorProperties"
+            ]
+          },
+          "then": {
+            "properties": {
+              "valueSchema": {
+                "properties": {
+                  "type": {
+                    "const": "string"
+                  }
+                }
+              }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "filterable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "filterable"
+                ]
+              },
+              {
+                "properties": {
+                  "searchable": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "searchable"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "schemaFile": {
+      "type": "object",
+      "required": [
+        "entities",
+        "links"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "description": "Ignored by Discover. Conventionally holds YAML anchors (&Name) reused with aliases/merge keys elsewhere in the file.",
+          "type": "object"
+        },
+        "baseEntity": {
+          "description": "Properties and links shared by every entity type. A later file's baseEntity extends the earlier one (properties may only be added).",
+          "$ref": "#/$defs/entityBody"
+        },
+        "entities": {
+          "description": "Entity types, keyed by type ID (e.g. FilmEntity). Use {} if the file defines none.",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/typeId"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/entityType"
+          }
+        },
+        "baseLink": {
+          "description": "Properties shared by every link type. May only be defined once across all files; leave it out of a custom schema.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "category": {
+              "$ref": "#/$defs/category"
+            },
+            "multiplicity": {
+              "$ref": "#/$defs/multiplicity"
+            },
+            "properties": {
+              "$ref": "#/$defs/linkProperties"
+            }
+          }
+        },
+        "links": {
+          "description": "Link types, keyed by type ID (e.g. DirectedBy). Use {} if the file defines none. Link types cannot be extended or redefined by a later file.",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/typeId"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/linkType"
+          }
+        }
+      },
+      "description": "Any entity schema file (core, chart or custom layer). Use #/$defs/schemaFile to validate the built-in or chart files; the root schema adds the rules for a custom file."
+    }
+  }
+}
