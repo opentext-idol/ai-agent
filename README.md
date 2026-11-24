@@ -23,3 +23,7 @@ See the skills directory for AI agent skills.
 ## Context
 
 See the context directory for AI agent context packs.
+
+## MCP servers
+
+See [mcp/content](mcp/content/README.md) for the Content discovery MCP server.
